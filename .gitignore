@@ -5,6 +5,7 @@ __pycache__/
 *.pyo
 chroma_db/
 uploads/
+sessions.json
 *.egg-info/
 dist/
 build/

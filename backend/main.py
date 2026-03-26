@@ -9,6 +9,7 @@ DISCLAIMER = (
     "errors and must not be relied upon as a substitute for advice from a licensed attorney. "
     "Always consult a qualified legal professional before making any legal decisions."
 )
+import json
 import os
 import uuid
 from pathlib import Path
@@ -26,8 +27,24 @@ load_dotenv()
 from backend.orchestrator import run_contract_review
 from backend.playbook import playbook
 
-# ── In-memory session store (replace with Redis/DB in production) ──────────────
-sessions: dict[str, dict] = {}
+# ── File-backed session store (survives server restarts / hot-reloads) ─────────
+SESSIONS_FILE = Path(os.getenv("SESSIONS_FILE", "./sessions.json"))
+
+
+def _load_sessions() -> dict:
+    if SESSIONS_FILE.exists():
+        try:
+            return json.loads(SESSIONS_FILE.read_text())
+        except Exception:
+            return {}
+    return {}
+
+
+def _save_sessions(data: dict):
+    SESSIONS_FILE.write_text(json.dumps(data))
+
+
+sessions: dict[str, dict] = _load_sessions()
 
 app = FastAPI(
     title="LegalAI",
@@ -92,6 +109,7 @@ async def review_contract(file: UploadFile = File(...)) -> dict[str, Any]:
     # Create session for HITL decisions
     session_id = str(uuid.uuid4())
     sessions[session_id] = result
+    _save_sessions(sessions)
 
     return {
         "session_id": session_id,
@@ -122,6 +140,7 @@ async def decide_redline(decision: RedlineDecision) -> dict:
         raise HTTPException(400, "Decision must be 'accepted' or 'rejected'.")
 
     redlines[decision.redline_index]["status"] = decision.decision
+    _save_sessions(sessions)
 
     accepted = sum(1 for r in redlines if r.get("status") == "accepted")
     rejected = sum(1 for r in redlines if r.get("status") == "rejected")
