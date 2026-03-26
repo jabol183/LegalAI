@@ -270,8 +270,16 @@ async function decideRedline(index, decision) {
 }
 
 function updatePendingBadge() {
-  const pending = currentRedlines.filter(r => r.status === 'pending').length;
+  const pending  = currentRedlines.filter(r => r.status === 'pending').length;
+  const accepted = currentRedlines.filter(r => r.status === 'accepted').length;
   pendingBadge.textContent = `${pending} pending`;
+
+  const hint = document.getElementById('finalize-hint');
+  if (hint) {
+    hint.textContent = accepted > 0
+      ? `${accepted} redline${accepted > 1 ? 's' : ''} accepted — ready to download final contract.`
+      : 'Accept redlines above to apply them to the final contract. Rejected and pending suggestions are excluded.';
+  }
 }
 
 function updateExportStatus(data) {
@@ -279,6 +287,40 @@ function updateExportStatus(data) {
   el.textContent = `${data.pii_detected} PII items were anonymized before AI processing. ` +
     `Review completed in ${data.elapsed_seconds}s.`;
 }
+
+// ── Finalize (apply accepted redlines → download rewritten contract) ───────────
+document.getElementById('finalize-btn').addEventListener('click', async () => {
+  if (!currentSessionId) return;
+
+  const acceptedCount = currentRedlines.filter(r => r.status === 'accepted').length;
+  if (acceptedCount === 0) {
+    alert('Accept at least one redline suggestion before downloading the final contract.');
+    return;
+  }
+
+  const btn = document.getElementById('finalize-btn');
+  btn.disabled = true;
+  btn.textContent = 'Generating…';
+
+  try {
+    const res = await fetch(`${API}/api/finalize/${currentSessionId}`, { method: 'POST' });
+    if (!res.ok) {
+      const err = await res.json();
+      alert(`Error: ${err.detail || 'Finalization failed'}`);
+      return;
+    }
+    const blob = await res.blob();
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href = url;
+    a.download = `legalai-final-${currentSessionId.slice(0, 8)}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Download Final Contract (TXT)';
+  }
+});
 
 // ── Export ─────────────────────────────────────────────────────────────────────
 document.getElementById('export-btn').addEventListener('click', async () => {

@@ -169,6 +169,70 @@ async def get_report(session_id: str) -> dict:
     }
 
 
+@app.post("/api/finalize/{session_id}")
+async def finalize_contract(session_id: str):
+    """
+    Apply all accepted redlines to the original contract text,
+    de-anonymize it, and return the final rewritten contract as a
+    plain-text file download.
+    """
+    from fastapi.responses import PlainTextResponse
+    from backend.anonymizer import anonymizer
+
+    session = sessions.get(session_id)
+    if not session:
+        raise HTTPException(404, "Session not found.")
+
+    redlines = session.get("redlines", [])
+    accepted = [r for r in redlines if r.get("status") == "accepted"]
+
+    if not accepted:
+        raise HTTPException(400, "No accepted redlines to apply. Accept at least one suggestion first.")
+
+    # Start from the raw (anonymized) contract text
+    contract = session.get("raw_text") or session.get("anonymized_text", "")
+    if not contract:
+        raise HTTPException(500, "Original contract text not found in session.")
+
+    # Apply each accepted redline: replace original clause with rewritten clause
+    applied, skipped = [], []
+    for r in accepted:
+        original = (r.get("original_clause") or "").strip()
+        rewritten = (r.get("rewritten_clause") or "").strip()
+        if not original or not rewritten:
+            skipped.append(r.get("clause_type", "unknown"))
+            continue
+        if original in contract:
+            contract = contract.replace(original, rewritten, 1)
+            applied.append(r.get("clause_type", "unknown"))
+        else:
+            skipped.append(r.get("clause_type", "unknown"))
+
+    # De-anonymize: restore original PII values
+    pii_mapping = session.get("pii_mapping", {})
+    if pii_mapping:
+        contract = anonymizer.deanonymize(contract, pii_mapping)
+
+    # Attach a header with review metadata
+    clf = session.get("classification", {})
+    header = (
+        f"LEGALAI FINAL CONTRACT — REDLINED VERSION\n"
+        f"{'=' * 60}\n"
+        f"Contract Type : {clf.get('contract_type', 'Unknown')}\n"
+        f"Jurisdiction  : {clf.get('jurisdiction', 'Unknown')}\n"
+        f"Redlines Applied : {len(applied)} ({', '.join(applied) or 'none'})\n"
+        f"Redlines Skipped : {len(skipped)} ({', '.join(skipped) or 'none'})\n"
+        f"\n{DISCLAIMER}\n"
+        f"{'=' * 60}\n\n"
+    )
+
+    filename = f"legalai-final-{session_id[:8]}.txt"
+    return PlainTextResponse(
+        content=header + contract,
+        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
+    )
+
+
 @app.post("/api/playbook")
 async def add_playbook_clause(item: PlaybookUpload) -> dict:
     """Add a standard clause to the firm's playbook."""
