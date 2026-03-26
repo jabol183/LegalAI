@@ -191,6 +191,16 @@ async def playbook_status() -> dict:
     }
 
 
+@app.post("/api/playbook/reseed")
+async def reseed_playbook() -> dict:
+    """Wipe and reload the playbook from the bundled standard_clauses.json."""
+    seed_path = Path(__file__).parent.parent / "playbooks" / "standard_clauses.json"
+    if not seed_path.exists():
+        raise HTTPException(404, "standard_clauses.json not found")
+    count = playbook.reseed(str(seed_path))
+    return {"ok": True, "clauses_loaded": count, "total_clauses": playbook.collection_count()}
+
+
 @app.get("/api/health")
 async def health() -> dict:
     return {"status": "ok", "version": "1.0.0"}

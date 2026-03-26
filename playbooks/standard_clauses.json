@@ -1,52 +1,122 @@
 [
   {
+    "id": "clause_indem_001",
     "type": "Indemnification",
+    "summary": "Mutual indemnification covering breaches, negligence, and third-party product claims, conditional on prompt notice.",
     "text": "Each party (\"Indemnifying Party\") shall defend, indemnify, and hold harmless the other party and its officers, directors, employees, agents, and successors from and against any and all claims, damages, losses, costs, and expenses (including reasonable attorneys' fees) arising out of or relating to: (a) the Indemnifying Party's breach of any representation, warranty, or obligation under this Agreement; (b) the Indemnifying Party's negligence or willful misconduct; or (c) any third-party claim arising from the Indemnifying Party's products or services. The Indemnifying Party's obligations are conditioned upon the Indemnified Party providing prompt written notice of the claim and reasonable cooperation.",
-    "metadata": {"risk_area": "Liability", "favors": "Balanced"}
+    "variables": [],
+    "metadata": {
+      "risk_area": "Liability",
+      "favors": "Balanced",
+      "tags": ["mutual", "breach", "negligence", "third-party"]
+    }
   },
   {
+    "id": "clause_liab_001",
     "type": "Limitation of Liability",
-    "text": "IN NO EVENT SHALL EITHER PARTY BE LIABLE TO THE OTHER FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, PUNITIVE, OR EXEMPLARY DAMAGES ARISING OUT OF OR RELATED TO THIS AGREEMENT, REGARDLESS OF THE THEORY OF LIABILITY AND EVEN IF SUCH PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. EACH PARTY'S TOTAL CUMULATIVE LIABILITY ARISING OUT OF OR RELATED TO THIS AGREEMENT SHALL NOT EXCEED THE GREATER OF (A) THE AMOUNTS PAID BY CLIENT TO COMPANY IN THE TWELVE (12) MONTHS PRECEDING THE CLAIM, OR (B) ONE HUNDRED THOUSAND DOLLARS ($100,000).",
-    "metadata": {"risk_area": "Liability", "favors": "Balanced"}
+    "summary": "Mutual waiver of indirect damages and a liability cap based on recent fees paid or a fixed dollar amount.",
+    "text": "IN NO EVENT SHALL EITHER PARTY BE LIABLE TO THE OTHER FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, PUNITIVE, OR EXEMPLARY DAMAGES ARISING OUT OF OR RELATED TO THIS AGREEMENT, REGARDLESS OF THE THEORY OF LIABILITY AND EVEN IF SUCH PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. EACH PARTY'S TOTAL CUMULATIVE LIABILITY ARISING OUT OF OR RELATED TO THIS AGREEMENT SHALL NOT EXCEED THE GREATER OF (A) THE AMOUNTS PAID BY CLIENT TO COMPANY IN THE {{lookback_months}} MONTHS PRECEDING THE CLAIM, OR (B) {{liability_cap_amount}}.",
+    "variables": ["lookback_months", "liability_cap_amount"],
+    "metadata": {
+      "risk_area": "Liability",
+      "favors": "Balanced",
+      "tags": ["cap", "indirect damages waiver", "mutual"]
+    }
   },
   {
+    "id": "clause_conf_001",
     "type": "Confidentiality",
-    "text": "Each party agrees to maintain in strict confidence all Confidential Information of the other party and to use such Confidential Information solely for the purposes of this Agreement. \"Confidential Information\" means any non-public information disclosed by one party to the other that is designated as confidential or that reasonably should be understood to be confidential. These obligations survive termination for five (5) years. Each party may disclose Confidential Information to its employees and contractors on a need-to-know basis, provided such persons are bound by obligations no less restrictive than those herein.",
-    "metadata": {"risk_area": "IP & Confidentiality", "favors": "Balanced"}
+    "summary": "Standard mutual NDA clause with a survival period for obligations after termination.",
+    "text": "Each party agrees to maintain in strict confidence all Confidential Information of the other party and to use such Confidential Information solely for the purposes of this Agreement. \"Confidential Information\" means any non-public information disclosed by one party to the other that is designated as confidential or that reasonably should be understood to be confidential. These obligations survive termination for {{survival_years}} years. Each party may disclose Confidential Information to its employees and contractors on a need-to-know basis, provided such persons are bound by obligations no less restrictive than those herein.",
+    "variables": ["survival_years"],
+    "metadata": {
+      "risk_area": "IP & Confidentiality",
+      "favors": "Balanced",
+      "tags": ["mutual", "survival", "employees"]
+    }
   },
   {
+    "id": "clause_ip_001",
     "type": "Intellectual Property",
+    "summary": "Client owns all new work product; Contractor retains pre-existing IP but grants a license to the Client.",
     "text": "All work product, deliverables, inventions, developments, and intellectual property created by Contractor in connection with this Agreement (\"Work Product\") shall be deemed works made for hire and shall be the exclusive property of Client. To the extent any Work Product does not qualify as works made for hire, Contractor hereby assigns to Client all right, title, and interest, including all intellectual property rights, in and to such Work Product. Contractor retains ownership of any pre-existing intellectual property (\"Background IP\") and grants Client a non-exclusive, perpetual, royalty-free license to use Background IP incorporated into the Work Product.",
-    "metadata": {"risk_area": "IP & Confidentiality", "favors": "Client"}
+    "variables": [],
+    "metadata": {
+      "risk_area": "IP & Confidentiality",
+      "favors": "Client",
+      "tags": ["work for hire", "assignment", "background IP"]
+    }
   },
   {
+    "id": "clause_term_conv_001",
     "type": "Termination for Convenience",
-    "text": "Either party may terminate this Agreement for any reason or no reason upon thirty (30) days' prior written notice to the other party. Upon termination, Client shall pay Company for all services performed and expenses incurred prior to the effective date of termination. Company shall deliver to Client all Work Product completed as of the termination date. Each party's obligations that, by their nature, should survive termination (including confidentiality, indemnification, and limitation of liability) shall survive.",
-    "metadata": {"risk_area": "Term & Termination", "favors": "Balanced"}
+    "summary": "Allows either party to terminate the agreement without cause by providing written notice.",
+    "text": "Either party may terminate this Agreement for any reason or no reason upon {{notice_period_days}} days' prior written notice to the other party. Upon termination, Client shall pay Company for all services performed and expenses incurred prior to the effective date of termination. Company shall deliver to Client all Work Product completed as of the termination date. Each party's obligations that, by their nature, should survive termination (including confidentiality, indemnification, and limitation of liability) shall survive.",
+    "variables": ["notice_period_days"],
+    "metadata": {
+      "risk_area": "Term & Termination",
+      "favors": "Balanced",
+      "tags": ["without cause", "survival", "mutual"]
+    }
   },
   {
+    "id": "clause_term_cause_001",
     "type": "Termination for Cause",
-    "text": "Either party may terminate this Agreement immediately upon written notice if the other party: (a) materially breaches this Agreement and fails to cure such breach within fifteen (15) days after receiving written notice thereof; (b) becomes insolvent or makes an assignment for the benefit of creditors; (c) has a receiver or administrator appointed; or (d) ceases to conduct business in the ordinary course. Termination for cause does not limit any other rights or remedies the terminating party may have.",
-    "metadata": {"risk_area": "Term & Termination", "favors": "Balanced"}
+    "summary": "Permits immediate termination for material breach (with a cure period), insolvency, or ceasing operations.",
+    "text": "Either party may terminate this Agreement immediately upon written notice if the other party: (a) materially breaches this Agreement and fails to cure such breach within {{cure_period_days}} days after receiving written notice thereof; (b) becomes insolvent or makes an assignment for the benefit of creditors; (c) has a receiver or administrator appointed; or (d) ceases to conduct business in the ordinary course. Termination for cause does not limit any other rights or remedies the terminating party may have.",
+    "variables": ["cure_period_days"],
+    "metadata": {
+      "risk_area": "Term & Termination",
+      "favors": "Balanced",
+      "tags": ["breach", "insolvency", "cure period"]
+    }
   },
   {
+    "id": "clause_gov_law_001",
     "type": "Governing Law and Dispute Resolution",
-    "text": "This Agreement shall be governed by and construed in accordance with the laws of the State of Delaware, without regard to its conflict of laws principles. Any dispute, claim, or controversy arising out of or relating to this Agreement shall first be subject to good faith negotiation for thirty (30) days. If unresolved, disputes shall be submitted to binding arbitration under the AAA Commercial Arbitration Rules, with a single arbitrator, conducted in English, with the seat of arbitration in New York, New York. The prevailing party shall be entitled to recover its reasonable attorneys' fees.",
-    "metadata": {"risk_area": "Dispute Resolution", "favors": "Balanced"}
+    "summary": "Specifies governing jurisdiction, mandates good faith negotiation, and requires binding arbitration for unresolved disputes.",
+    "text": "This Agreement shall be governed by and construed in accordance with the laws of the State of {{governing_state}}, without regard to its conflict of laws principles. Any dispute, claim, or controversy arising out of or relating to this Agreement shall first be subject to good faith negotiation for {{negotiation_days}} days. If unresolved, disputes shall be submitted to binding arbitration under the {{arbitration_rules}}, with a single arbitrator, conducted in English, with the seat of arbitration in {{arbitration_city_state}}. The prevailing party shall be entitled to recover its reasonable attorneys' fees.",
+    "variables": ["governing_state", "negotiation_days", "arbitration_rules", "arbitration_city_state"],
+    "metadata": {
+      "risk_area": "Dispute Resolution",
+      "favors": "Balanced",
+      "tags": ["arbitration", "negotiation", "attorneys fees"]
+    }
   },
   {
+    "id": "clause_nonsolicit_001",
     "type": "Non-Solicitation",
-    "text": "During the term of this Agreement and for twelve (12) months thereafter, neither party shall directly solicit or induce any employee of the other party with whom such party had material contact during the performance of this Agreement to terminate their employment. This restriction does not apply to general solicitations through public job postings or advertisements not specifically targeting the other party's employees.",
-    "metadata": {"risk_area": "Employment", "favors": "Balanced"}
+    "summary": "Mutual restriction on poaching employees during the agreement and for a set period after.",
+    "text": "During the term of this Agreement and for {{restriction_months}} months thereafter, neither party shall directly solicit or induce any employee of the other party with whom such party had material contact during the performance of this Agreement to terminate their employment. This restriction does not apply to general solicitations through public job postings or advertisements not specifically targeting the other party's employees.",
+    "variables": ["restriction_months"],
+    "metadata": {
+      "risk_area": "Employment",
+      "favors": "Balanced",
+      "tags": ["poaching", "employees", "carve-out"]
+    }
   },
   {
+    "id": "clause_payment_001",
     "type": "Payment Terms",
-    "text": "Client shall pay all undisputed invoices within thirty (30) days of receipt. Late payments shall accrue interest at the lesser of 1.5% per month or the maximum rate permitted by law. Company reserves the right to suspend services upon thirty (30) days' written notice if invoices remain unpaid beyond sixty (60) days. Client shall reimburse Company for all pre-approved, reasonable expenses incurred in connection with the services, provided Company submits expense reports with supporting documentation.",
-    "metadata": {"risk_area": "Commercial", "favors": "Balanced"}
+    "summary": "Defines invoice payment windows, late payment interest rates, and conditions for service suspension.",
+    "text": "Client shall pay all undisputed invoices within {{payment_window_days}} days of receipt. Late payments shall accrue interest at the lesser of {{interest_rate_percent}}% per month or the maximum rate permitted by law. Company reserves the right to suspend services upon {{suspension_notice_days}} days' written notice if invoices remain unpaid beyond {{delinquency_days}} days. Client shall reimburse Company for all pre-approved, reasonable expenses incurred in connection with the services, provided Company submits expense reports with supporting documentation.",
+    "variables": ["payment_window_days", "interest_rate_percent", "suspension_notice_days", "delinquency_days"],
+    "metadata": {
+      "risk_area": "Commercial",
+      "favors": "Balanced",
+      "tags": ["invoicing", "late fees", "suspension", "expenses"]
+    }
   },
   {
+    "id": "clause_warranty_001",
     "type": "Warranties",
+    "summary": "General authority and compliance warranties, a professional services warranty, and a disclaimer of implied warranties.",
     "text": "Each party represents and warrants that: (a) it has full authority to enter into and perform this Agreement; (b) this Agreement does not conflict with any other agreement to which it is a party; and (c) it will comply with all applicable laws and regulations in connection with this Agreement. Company further warrants that services will be performed in a professional and workmanlike manner consistent with industry standards. EXCEPT AS EXPRESSLY SET FORTH HEREIN, EACH PARTY DISCLAIMS ALL OTHER WARRANTIES, EXPRESS OR IMPLIED, INCLUDING THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.",
-    "metadata": {"risk_area": "Warranties", "favors": "Balanced"}
+    "variables": [],
+    "metadata": {
+      "risk_area": "Warranties",
+      "favors": "Balanced",
+      "tags": ["authority", "compliance", "disclaimer", "workmanlike"]
+    }
   }
 ]
