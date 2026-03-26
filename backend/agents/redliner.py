@@ -89,8 +89,12 @@ def redline_clause(
         risk_level=risk_level,
     )
 
+    # Use Sonnet only for High/Critical — Haiku handles Medium redlines
+    risk_order = {"None": 0, "Low": 1, "Medium": 2, "High": 3, "Critical": 4}
+    model = "claude-sonnet-4-6" if risk_order.get(risk_level, 0) >= 3 else "claude-haiku-4-5-20251001"
+
     response = client.messages.create(
-        model="claude-sonnet-4-6",
+        model=model,
         max_tokens=4096,
         system=SYSTEM_PROMPT,
         messages=[{"role": "user", "content": prompt}],
