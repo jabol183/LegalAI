@@ -118,5 +118,101 @@
       "favors": "Balanced",
       "tags": ["authority", "compliance", "disclaimer", "workmanlike"]
     }
+  },
+  {
+    "id": "clause_parties_001",
+    "type": "Parties and Effective Date",
+    "summary": "Identifies the contracting parties with full legal names, formation states, and addresses, and establishes the effective date of the agreement.",
+    "text": "This Agreement is entered into as of the date last signed below (\"Effective Date\"), by and between {{client_legal_name}}, a {{client_formation_state}} {{client_entity_type}} with its principal place of business at {{client_address}} (\"Client\"), and {{company_legal_name}}, a {{company_formation_state}} {{company_entity_type}} with its principal place of business at {{company_address}} (\"Company\"). Client and Company may be referred to individually as a \"Party\" and collectively as the \"Parties.\" No Party shall be bound by this Agreement until it has been duly executed by an authorized representative of each Party.",
+    "variables": ["client_legal_name", "client_formation_state", "client_entity_type", "client_address", "company_legal_name", "company_formation_state", "company_entity_type", "company_address"],
+    "metadata": {
+      "risk_area": "Contract Formation",
+      "favors": "Balanced",
+      "tags": ["parties", "effective date", "entity identification", "execution"]
+    }
+  },
+  {
+    "id": "clause_recitals_001",
+    "type": "Recitals",
+    "summary": "Background recitals establishing the purpose and context of the agreement between the parties.",
+    "text": "WHEREAS, Client desires to obtain certain {{services_description}} services from Company; and WHEREAS, Company desires to provide such services to Client on the terms and conditions set forth herein; NOW, THEREFORE, in consideration of the mutual covenants and agreements set forth herein, and for other good and valuable consideration, the receipt and sufficiency of which are hereby acknowledged, the parties agree as follows:",
+    "variables": ["services_description"],
+    "metadata": {
+      "risk_area": "Contract Formation",
+      "favors": "Balanced",
+      "tags": ["recitals", "whereas", "consideration", "background"]
+    }
+  },
+  {
+    "id": "clause_definitions_001",
+    "type": "Definitions",
+    "summary": "Defines key terms used throughout the agreement to ensure consistent interpretation.",
+    "text": "As used in this Agreement, the following terms shall have the meanings set forth below. \"Affiliate\" means any entity that directly or indirectly controls, is controlled by, or is under common control with a party. \"Agreement\" means this agreement together with all exhibits, schedules, and statements of work attached hereto. \"Applicable Law\" means all laws, regulations, rules, and orders applicable to a party's performance under this Agreement. \"Business Day\" means any day other than a Saturday, Sunday, or a day on which banks are authorized or required to be closed in the State of {{governing_state}}. \"Confidential Information\" has the meaning set forth in the Confidentiality section. \"Effective Date\" has the meaning set forth in the preamble. \"Services\" means the services described in each Statement of Work. \"Statement of Work\" or \"SOW\" means a written statement of work executed by both parties that describes specific services, deliverables, timelines, and fees.",
+    "variables": ["governing_state"],
+    "metadata": {
+      "risk_area": "Contract Formation",
+      "favors": "Balanced",
+      "tags": ["definitions", "terms", "interpretation", "SOW"]
+    }
+  },
+  {
+    "id": "clause_force_majeure_001",
+    "type": "Force Majeure",
+    "summary": "Excuses performance delays caused by events outside a party's reasonable control, with notice and mitigation obligations.",
+    "text": "Neither party shall be liable for any delay or failure to perform its obligations under this Agreement to the extent such delay or failure is caused by circumstances beyond such party's reasonable control, including but not limited to acts of God, natural disasters, pandemics, epidemics, war, terrorism, riots, embargoes, acts of civil or military authority, fire, floods, accidents, strikes, or failures of third-party telecommunications or internet service providers (each, a \"Force Majeure Event\"). The party affected by a Force Majeure Event shall: (a) provide prompt written notice to the other party describing the Force Majeure Event and its expected duration; (b) use commercially reasonable efforts to mitigate the effects of and overcome the Force Majeure Event; and (c) resume performance as soon as reasonably practicable. If a Force Majeure Event continues for more than {{force_majeure_threshold_days}} consecutive days, either party may terminate this Agreement upon written notice without liability, provided that Client shall remain obligated to pay for all services performed prior to the Force Majeure Event.",
+    "variables": ["force_majeure_threshold_days"],
+    "metadata": {
+      "risk_area": "Risk Allocation",
+      "favors": "Balanced",
+      "tags": ["force majeure", "excuse of performance", "notice", "termination"]
+    }
+  },
+  {
+    "id": "clause_amendment_001",
+    "type": "Amendment and Waiver",
+    "summary": "Requires written agreement for amendments and clarifies that failure to enforce a right does not constitute waiver of that right.",
+    "text": "This Agreement may not be amended, modified, or supplemented except by a written instrument signed by authorized representatives of both parties. No failure or delay by either party in exercising any right, power, or privilege under this Agreement shall operate as a waiver thereof, nor shall any single or partial exercise of any right, power, or privilege preclude any other or further exercise thereof or the exercise of any other right, power, or privilege. No waiver of any breach or default shall be deemed a waiver of any subsequent breach or default of the same or similar nature.",
+    "variables": [],
+    "metadata": {
+      "risk_area": "Contract Administration",
+      "favors": "Balanced",
+      "tags": ["amendment", "waiver", "modification", "written requirement"]
+    }
+  },
+  {
+    "id": "clause_notices_001",
+    "type": "Notices",
+    "summary": "Specifies how formal notices must be delivered between parties and when they are deemed received.",
+    "text": "All notices, requests, demands, and other communications required or permitted under this Agreement shall be in writing and shall be deemed duly given: (a) when delivered personally to the recipient; (b) one (1) Business Day after deposit with a nationally recognized overnight courier service, addressed to the recipient; (c) three (3) Business Days after mailing by certified or registered mail, return receipt requested, postage prepaid, addressed to the recipient; or (d) upon transmission by email with written confirmation of receipt by the recipient (not including auto-reply). Notices to Client shall be sent to {{client_notice_address}} (Attention: {{client_notice_contact}}). Notices to Company shall be sent to {{company_notice_address}} (Attention: {{company_notice_contact}}). Either party may change its notice address by providing written notice to the other party in accordance with this section.",
+    "variables": ["client_notice_address", "client_notice_contact", "company_notice_address", "company_notice_contact"],
+    "metadata": {
+      "risk_area": "Contract Administration",
+      "favors": "Balanced",
+      "tags": ["notices", "communications", "email", "overnight courier"]
+    }
+  },
+  {
+    "id": "clause_entire_agreement_001",
+    "type": "Entire Agreement and Severability",
+    "summary": "States the agreement is the complete understanding between parties and that invalid provisions are severed without voiding the whole agreement.",
+    "text": "This Agreement, together with all Statements of Work and exhibits attached hereto, constitutes the entire agreement between the parties with respect to its subject matter and supersedes all prior and contemporaneous agreements, representations, warranties, and understandings, whether written or oral, relating to such subject matter. If any provision of this Agreement is held to be invalid, illegal, or unenforceable in any jurisdiction, such invalidity, illegality, or unenforceability shall not affect any other provision of this Agreement or the validity, legality, or enforceability of such provision in any other jurisdiction, and the parties shall negotiate in good faith to replace the invalid provision with a valid provision that, to the greatest extent possible, achieves the original intent and economic effect of the invalid provision.",
+    "variables": [],
+    "metadata": {
+      "risk_area": "Contract Administration",
+      "favors": "Balanced",
+      "tags": ["entire agreement", "integration", "severability", "merger clause"]
+    }
+  },
+  {
+    "id": "clause_assignment_001",
+    "type": "Assignment",
+    "summary": "Restricts assignment of the agreement without prior written consent, with an exception for mergers and acquisitions.",
+    "text": "Neither party may assign, transfer, delegate, or subcontract any of its rights or obligations under this Agreement without the prior written consent of the other party, which consent shall not be unreasonably withheld, conditioned, or delayed. Notwithstanding the foregoing, either party may assign this Agreement without consent in connection with a merger, acquisition, corporate reorganization, or sale of all or substantially all of its assets to which this Agreement relates, provided that: (a) the assignee assumes in writing all of the assigning party's obligations under this Agreement; (b) the assigning party provides the other party with prompt written notice of such assignment; and (c) the assignee is not a direct competitor of the non-assigning party. Any purported assignment in violation of this section shall be null and void. This Agreement shall be binding upon and inure to the benefit of the parties and their respective permitted successors and assigns.",
+    "variables": [],
+    "metadata": {
+      "risk_area": "Contract Administration",
+      "favors": "Balanced",
+      "tags": ["assignment", "transfer", "M&A", "successors"]
+    }
   }
 ]
