@@ -1,5 +1,5 @@
 """
-FastAPI backend for LegalAI — LegalFly-style contract review system.
+FastAPI backend for LegalAI — Agentic contract review system.
 """
 
 DISCLAIMER = (

@@ -4,7 +4,7 @@
 
 ---
 
-> An agentic contract review system inspired by LegalFly — built with Claude, LangGraph, ChromaDB, and Microsoft Presidio.
+> An agentic contract review system built with Claude, LangGraph, ChromaDB, and Microsoft Presidio.
 
 LegalAI solves the three biggest hurdles in legal AI: **Data Privacy**, **Contextual Accuracy**, and **User Friction**. It doesn't just "read" a contract — it executes a full legal workflow through a pipeline of specialized AI agents.
 
