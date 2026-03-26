@@ -98,9 +98,11 @@ def analyze_clause(
         messages=[{"role": "user", "content": prompt}],
     )
 
+    matched = similar[0] if similar and similar[0]["similarity"] >= similarity_threshold else None
+
     result = _parse_json(response.content[0].text)
     result["original_clause"] = clause
-    result["playbook_match"] = similar[0] if similar else None
+    result["playbook_match"] = matched
     return result
 
 
