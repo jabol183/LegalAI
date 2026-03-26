@@ -24,12 +24,6 @@ source .venv/bin/activate
 echo "Installing dependencies..."
 pip install -q -r requirements.txt
 
-# Download spaCy model if not present
-python -c "import spacy; spacy.load('en_core_web_lg')" 2>/dev/null || {
-  echo "Downloading spaCy model..."
-  python -m spacy download en_core_web_lg
-}
-
 # Seed the playbook with standard clauses if ChromaDB is empty
 python -c "
 import sys

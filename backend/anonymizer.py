@@ -13,8 +13,6 @@ try:
 except ImportError:
     PRESIDIO_AVAILABLE = False
 
-import spacy
-
 # Mapping from detected entity type → placeholder token
 ENTITY_PLACEHOLDER_MAP = {
     "PERSON": "PARTY",
