@@ -68,7 +68,7 @@ def analyze_clause(
     clause: str,
     contract_type: str,
     jurisdiction: str,
-    similarity_threshold: float = 0.3,
+    similarity_threshold: float = 0.55,
 ) -> dict:
     """
     Analyze a single clause against the playbook.

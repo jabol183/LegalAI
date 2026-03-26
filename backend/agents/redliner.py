@@ -51,7 +51,24 @@ def _parse_json(raw: str) -> dict:
     try:
         return json.loads(raw)
     except json.JSONDecodeError:
-        return {"error": raw, "rewritten_clause": raw}
+        # Truncated JSON — try to salvage the rewritten_clause value at minimum
+        import re
+        match = re.search(r'"rewritten_clause"\s*:\s*"((?:[^"\\]|\\.)*)"', raw, re.DOTALL)
+        if match:
+            try:
+                rewritten = match.group(1).encode().decode("unicode_escape")
+            except Exception:
+                rewritten = match.group(1)
+            summary_match = re.search(r'"changes_summary"\s*:\s*"((?:[^"\\]|\\.)*)"', raw, re.DOTALL)
+            return {
+                "rewritten_clause": rewritten,
+                "changes_summary": summary_match.group(1) if summary_match else "Response was truncated — clause was rewritten but full summary unavailable.",
+                "change_details": [],
+                "negotiation_notes": "",
+                "fallback_position": "",
+                "_truncated": True,
+            }
+        return {"error": "JSON parse failed", "rewritten_clause": ""}
 
 
 def redline_clause(
@@ -74,7 +91,7 @@ def redline_clause(
 
     response = client.messages.create(
         model="claude-sonnet-4-6",
-        max_tokens=1500,
+        max_tokens=4096,
         system=SYSTEM_PROMPT,
         messages=[{"role": "user", "content": prompt}],
     )
@@ -101,7 +118,8 @@ def redline_flagged_clauses(
 
     redlines = []
     for analysis in risk_analyses:
-        if "error" in analysis:
+        # Skip only if there's no risk_level — a parse error from risk analyst
+        if not analysis.get("risk_level"):
             continue
         level = analysis.get("risk_level", "None")
         if risk_order.get(level, 0) < min_level:

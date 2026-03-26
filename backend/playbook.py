@@ -94,13 +94,15 @@ class PlaybookEngine:
         )
 
         output = []
+        # Fields already surfaced at the top level — no need to repeat in metadata
+        _redundant_keys = {"clause_type", "clause_id", "summary", "variables"}
+
         for doc, meta, dist in zip(
             results["documents"][0],
             results["metadatas"][0],
             results["distances"][0],
         ):
             similarity = 1 - dist
-            # Restore variables list from comma-separated string
             variables_raw = meta.get("variables", "")
             variables = [v.strip() for v in variables_raw.split(",")] if variables_raw else []
 
@@ -111,7 +113,7 @@ class PlaybookEngine:
                 "standard_text": doc,
                 "variables": variables,
                 "similarity": round(similarity, 3),
-                "metadata": meta,
+                "metadata": {k: v for k, v in meta.items() if k not in _redundant_keys},
             })
         return output
 
