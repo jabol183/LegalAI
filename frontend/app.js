@@ -313,12 +313,12 @@ document.getElementById('finalize-btn').addEventListener('click', async () => {
     const url  = URL.createObjectURL(blob);
     const a    = document.createElement('a');
     a.href = url;
-    a.download = `legalai-final-${currentSessionId.slice(0, 8)}.txt`;
+    a.download = `legalai-final-${currentSessionId.slice(0, 8)}.md`;
     a.click();
     URL.revokeObjectURL(url);
   } finally {
     btn.disabled = false;
-    btn.textContent = 'Download Final Contract (TXT)';
+    btn.textContent = 'Download Final Contract (.md)';
   }
 });
 
