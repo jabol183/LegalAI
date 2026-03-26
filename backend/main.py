@@ -1,6 +1,14 @@
 """
 FastAPI backend for LegalAI — LegalFly-style contract review system.
 """
+
+DISCLAIMER = (
+    "NOT LEGAL ADVICE: LegalAI is an AI-powered document analysis tool only. "
+    "It does not provide legal advice, does not constitute the practice of law, "
+    "and does not create an attorney-client relationship. All output may contain "
+    "errors and must not be relied upon as a substitute for advice from a licensed attorney. "
+    "Always consult a qualified legal professional before making any legal decisions."
+)
 import os
 import uuid
 from pathlib import Path
@@ -93,6 +101,7 @@ async def review_contract(file: UploadFile = File(...)) -> dict[str, Any]:
         "risk_summary": _build_risk_summary(result.get("risk_analyses", [])),
         "redlines": result.get("redlines", []),
         "pii_detected": len(result.get("pii_mapping", {})),
+        "disclaimer": DISCLAIMER,
     }
 
 
@@ -137,6 +146,7 @@ async def get_report(session_id: str) -> dict:
         "risk_analyses": session.get("risk_analyses", []),
         "redlines": session.get("redlines", []),
         "pii_mapping_count": len(session.get("pii_mapping", {})),
+        "disclaimer": DISCLAIMER,
     }
 
 

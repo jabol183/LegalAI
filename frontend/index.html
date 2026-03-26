@@ -12,6 +12,10 @@
     <div class="tagline">Agentic Contract Review · PII-Safe · Playbook-Powered</div>
   </header>
 
+  <div class="disclaimer-banner">
+    <strong>Not Legal Advice.</strong> LegalAI is an AI-powered document analysis tool, not a law firm. It does not provide legal advice, create an attorney-client relationship, or substitute for a licensed attorney. Always consult a qualified legal professional before acting on any output from this tool.
+  </div>
+
   <main>
     <!-- Upload Panel -->
     <section id="upload-section" class="card">
@@ -26,6 +30,10 @@
       </div>
 
       <button class="btn primary" id="review-btn" disabled>Run Contract Review</button>
+
+      <p class="disclaimer-inline">
+        By uploading a document you acknowledge that LegalAI is <strong>not a substitute for legal counsel</strong>. This tool is for informational and workflow-assistance purposes only. No attorney-client relationship is formed by using this service.
+      </p>
     </section>
 
     <!-- Progress -->
@@ -98,7 +106,10 @@
   </main>
 
   <footer>
-    <p>PII is anonymized locally before reaching any AI model. Session data is not persisted. Built with Claude + LangGraph + ChromaDB.</p>
+    <p class="footer-disclaimer">
+      ⚠ <strong>Legal Disclaimer:</strong> LegalAI is an AI tool for document analysis assistance only. It is <strong>not legal advice</strong>, does not constitute the practice of law, and does not create an attorney-client relationship. The output of this tool may contain errors and should never be relied upon as a substitute for advice from a licensed attorney. Always consult a qualified legal professional before making legal decisions.
+    </p>
+    <p style="margin-top:0.75rem">PII is anonymized locally before reaching any AI model. Session data is not persisted. Built with Claude + LangGraph + ChromaDB.</p>
   </footer>
 
   <script src="/static/app.js"></script>

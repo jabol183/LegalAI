@@ -1,5 +1,9 @@
 # ⚖ LegalAI
 
+> **Legal Disclaimer:** LegalAI is an AI-powered document analysis tool only. It does **not** provide legal advice, does not constitute the practice of law, and does not create an attorney-client relationship. All output may contain errors and must not be relied upon as a substitute for advice from a licensed attorney. Always consult a qualified legal professional before making any legal decisions.
+
+---
+
 > An agentic contract review system inspired by LegalFly — built with Claude, LangGraph, ChromaDB, and Microsoft Presidio.
 
 LegalAI solves the three biggest hurdles in legal AI: **Data Privacy**, **Contextual Accuracy**, and **User Friction**. It doesn't just "read" a contract — it executes a full legal workflow through a pipeline of specialized AI agents.
@@ -251,6 +255,18 @@ Only **Medium and above** trigger automatic redline generation.
 - **10 MB file limit** — adjustable in `main.py`.
 - **Presidio requires the spaCy model** — the startup script downloads it automatically (~750 MB first run).
 - **Rate limits** — large contracts with many clauses make multiple Claude API calls. Consider batching for very long documents.
+
+---
+
+## Legal Disclaimer
+
+> **LegalAI is not a law firm and does not provide legal advice.**
+>
+> This software is provided for informational and workflow-assistance purposes only. Use of this tool does not create an attorney-client relationship between the user and any developer, contributor, or operator of this software. The AI-generated output — including contract classifications, risk assessments, and suggested redlines — may be incomplete, inaccurate, or inappropriate for your specific situation.
+>
+> **In almost every jurisdiction, giving legal advice without a license is a crime.** This tool is designed to assist licensed legal professionals — not to replace them. If you deploy this application, you are responsible for ensuring it includes appropriate disclaimers, complies with the unauthorized practice of law (UPL) rules in your jurisdiction, and is used only as a productivity aid by qualified professionals.
+>
+> Always consult a licensed attorney before acting on any output from this tool.
 
 ---
 
