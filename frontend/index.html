@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LegalAI — Agentic Contract Review</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">⚖ LegalAI</div>
+    <div class="tagline">Agentic Contract Review · PII-Safe · Playbook-Powered</div>
+  </header>
+
+  <main>
+    <!-- Upload Panel -->
+    <section id="upload-section" class="card">
+      <h2>Upload Contract</h2>
+      <p class="hint">Supports PDF, DOCX, TXT — up to 10 MB. PII is anonymized before any AI processing.</p>
+
+      <div class="upload-zone" id="drop-zone">
+        <div class="upload-icon">📄</div>
+        <p>Drop your contract here or <label for="file-input" class="link">browse</label></p>
+        <input type="file" id="file-input" accept=".pdf,.docx,.txt" hidden />
+        <p class="file-name" id="file-name-display"></p>
+      </div>
+
+      <button class="btn primary" id="review-btn" disabled>Run Contract Review</button>
+    </section>
+
+    <!-- Progress -->
+    <section id="progress-section" class="card hidden">
+      <h2>Analyzing Contract…</h2>
+      <div class="pipeline">
+        <div class="step" id="step-parse">📄 Parse</div>
+        <div class="arrow">→</div>
+        <div class="step" id="step-anon">🔒 Anonymize</div>
+        <div class="arrow">→</div>
+        <div class="step" id="step-classify">🏷 Classify</div>
+        <div class="arrow">→</div>
+        <div class="step" id="step-risk">🔍 Risk Analysis</div>
+        <div class="arrow">→</div>
+        <div class="step" id="step-redline">✏ Redline</div>
+      </div>
+      <div class="spinner"></div>
+    </section>
+
+    <!-- Results -->
+    <section id="results-section" class="hidden">
+
+      <!-- Classification Card -->
+      <div class="card" id="classification-card">
+        <h2>Contract Classification</h2>
+        <div class="meta-grid" id="classification-grid"></div>
+      </div>
+
+      <!-- Risk Summary -->
+      <div class="card" id="risk-card">
+        <h2>Risk Summary</h2>
+        <div class="risk-bar-container" id="risk-bars"></div>
+        <div id="high-priority-flags"></div>
+      </div>
+
+      <!-- Redlines (HITL) -->
+      <div class="card" id="redlines-card">
+        <h2>Redline Suggestions <span class="badge" id="pending-badge">0 pending</span></h2>
+        <p class="hint">Review each AI-suggested change. Accept or reject before exporting.</p>
+        <div id="redlines-list"></div>
+      </div>
+
+      <!-- Export -->
+      <div class="card" id="export-card">
+        <h2>Export</h2>
+        <p id="export-status"></p>
+        <button class="btn secondary" id="export-btn">Download Report (JSON)</button>
+        <button class="btn outline" id="new-review-btn">New Review</button>
+      </div>
+
+    </section>
+
+    <!-- Playbook Manager -->
+    <section class="card" id="playbook-section">
+      <h2>Playbook Manager</h2>
+      <p class="hint">Upload your firm's standard clauses to power the RAG comparison engine.</p>
+
+      <div class="playbook-status" id="playbook-status">Loading…</div>
+
+      <h3>Add Single Clause</h3>
+      <input type="text" id="clause-type" placeholder="Clause Type (e.g. Indemnification)" />
+      <textarea id="clause-text" placeholder="Paste your firm's standard clause language here…" rows="4"></textarea>
+      <button class="btn secondary" id="add-clause-btn">Add to Playbook</button>
+
+      <h3 style="margin-top:1.5rem">Bulk Upload</h3>
+      <p class="hint">Upload a JSON file: <code>[{"type":"...","text":"..."}]</code></p>
+      <input type="file" id="playbook-file" accept=".json" />
+      <button class="btn secondary" id="upload-playbook-btn">Upload JSON Playbook</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>PII is anonymized locally before reaching any AI model. Session data is not persisted. Built with Claude + LangGraph + ChromaDB.</p>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
